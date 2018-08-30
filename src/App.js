@@ -15,11 +15,14 @@ class App extends Component {
     this.deleteTodo = this.deleteTodo.bind(this);
     this.editTodo = this.editTodo.bind(this);
     this.updateTodo = this.updateTodo.bind(this);
+    this.completeTodo = this.completeTodo.bind(this);
     this.apiUrl = "https://5b87daa335589600143c14a5.mockapi.io/todos";
   }
   state = {
     newTodo: "",
     editing: false,
+    isComplete: false,
+    isCompleteIndex: null,
     editingIndex: null,
     notification: null,
     loading: true,
@@ -70,6 +73,14 @@ class App extends Component {
     });
     this.alert("Todo deleted successfully");
   }
+  completeTodo(index) {
+    const isComplete = this.state.isComplete;
+
+    this.setState({
+      isComplete: !isComplete,
+      isCompleteIndex: index
+    });
+  }
   editTodo(index) {
     const todo = this.state.todos[index];
     this.setState({
@@ -101,7 +112,15 @@ class App extends Component {
     }, 2000);
   }
   render() {
-    const { todos, newTodo, editing, notification, loading } = this.state;
+    const {
+      todos,
+      newTodo,
+      editing,
+      notification,
+      loading,
+      isComplete,
+      isCompleteIndex
+    } = this.state;
     return (
       <div className="container">
         <div className="App">
@@ -112,6 +131,7 @@ class App extends Component {
               placeholder="Enter text"
               onChange={this.handleChange}
               value={newTodo}
+              className="input-todo"
             />
             <br />
             {notification && (
@@ -123,6 +143,7 @@ class App extends Component {
             <Button
               bsSize="large"
               bsStyle="success"
+              className="add-btn"
               onClick={!editing ? this.addTodo : this.updateTodo}
               disabled={this.state.newTodo.length < 3}
             >
@@ -136,10 +157,13 @@ class App extends Component {
                 <ListItem
                   key={index}
                   index={index}
+                  isComplete={isComplete}
                   item={item}
+                  isCompleteIndex={isCompleteIndex}
                   todos={todos}
                   editTodo={() => this.editTodo(index)}
                   deleteTodo={() => this.deleteTodo(index)}
+                  completeTodo={() => this.completeTodo(index)}
                 />
               );
             })}
