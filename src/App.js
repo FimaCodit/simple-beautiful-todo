@@ -21,10 +21,10 @@ class App extends Component {
   state = {
     newTodo: "",
     editing: false,
-    isComplete: false,
-    isCompleteIndex: null,
     editingIndex: null,
     notification: null,
+    isCompleted: false,
+    isCompletedIndex: null,
     loading: true,
     todos: []
   };
@@ -73,13 +73,18 @@ class App extends Component {
     });
     this.alert("Todo deleted successfully");
   }
-  completeTodo(index) {
-    const isComplete = this.state.isComplete;
+  async completeTodo(index, isCompleted) {
+    const todo = this.state.todos[index];
+    const todoCompteled = !this.state.todos[isCompleted];
 
-    this.setState({
-      isComplete: !isComplete,
-      isCompleteIndex: index
+    const response = await axios.put(`${this.apiUrl}/${todo.id}`, {
+      isCompleted: todoCompteled
     });
+    const todos = this.state.todos;
+    console.log(response);
+    todo.isCompleted = todo.isCompleted ? false : true;
+
+    this.setState({ todos, isCompletedIndex: index });
   }
   editTodo(index) {
     const todo = this.state.todos[index];
@@ -118,9 +123,9 @@ class App extends Component {
       editing,
       notification,
       loading,
-      isComplete,
-      isCompleteIndex
+      isCompletedIndex
     } = this.state;
+    const { isCompleted } = this.state.todos;
     return (
       <div className="container">
         <div className="App">
@@ -157,13 +162,13 @@ class App extends Component {
                 <ListItem
                   key={index}
                   index={index}
-                  isComplete={isComplete}
+                  isCompleted={isCompleted}
                   item={item}
-                  isCompleteIndex={isCompleteIndex}
+                  isCompletedIndex={isCompletedIndex}
                   todos={todos}
                   editTodo={() => this.editTodo(index)}
                   deleteTodo={() => this.deleteTodo(index)}
-                  completeTodo={() => this.completeTodo(index)}
+                  completeTodo={() => this.completeTodo(index, isCompleted)}
                 />
               );
             })}

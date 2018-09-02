@@ -7,10 +7,7 @@ const ListItem = props => {
     <ListGroupItem className="todo-item" key={props.index}>
       <span
         style={{
-          textDecoration:
-            props.isComplete && props.isCompleteIndex === props.index
-              ? "line-through"
-              : "none"
+          textDecoration: props.item.isCompleted ? "line-through" : "none"
         }}
       >
         {props.item.name}
