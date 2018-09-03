@@ -1,12 +1,18 @@
 import React from "react";
-import { Button, ListGroupItem, Radio } from "react-bootstrap";
+import { ListGroupItem } from "react-bootstrap";
 import "../App.css";
 
 const ListItem = props => {
   return (
     <ListGroupItem className="todo-item" key={props.index}>
       <label>
-        <input type="checkbox" className="regular-radio" />
+        <input
+          id="rInput"
+          checked={props.item.isCompleted}
+          type="checkbox"
+          onChange={event => props.completeTodo(props.index, event)}
+          className="regular-radio"
+        />
         <span
           className="task-title"
           style={{
@@ -16,12 +22,13 @@ const ListItem = props => {
           {props.item.name}
         </span>
       </label>
-      <Button
-        className="ml-4 delete-btn"
-        bsStyle="danger"
+
+      <i
+        class="fas fa-trash"
+        className=" delete-btn"
         onClick={props.deleteTodo}
       />
-      <Button bsStyle="info" className="edit-btn" onClick={props.editTodo} />
+      <i class="fas fa-edit" className="edit-btn" onClick={props.editTodo} />
     </ListGroupItem>
   );
 };

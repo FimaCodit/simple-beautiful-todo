@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Header from "./Components/Header";
-import { FormControl, Button, Grid, Row, Col } from "react-bootstrap";
+import { FormControl, Grid, Row, Col } from "react-bootstrap";
 import ListItem from "./Components/ListItem";
 import "./App.css";
 
@@ -74,18 +74,23 @@ class App extends Component {
     });
     this.alert("Todo deleted successfully");
   }
-  async completeTodo(index, isCompleted) {
+  async completeTodo(index, event) {
+    const todos = [...this.state.todos];
     const todo = this.state.todos[index];
-    const todoCompteled = !this.state.todos[isCompleted];
-
     const response = await axios.put(`${this.apiUrl}/${todo.id}`, {
-      isCompleted: todoCompteled
+      isCompleted: event.target.checked
     });
-    const todos = this.state.todos;
-    console.log(response);
-    todo.isCompleted = todo.isCompleted ? false : true;
 
-    this.setState({ todos, isCompletedIndex: index });
+    todos[index] = {
+      ...todos[index],
+      isCompleted: !response.isCompleted
+    };
+
+    todos[this.state.todos.isCompleted] = response.data;
+
+    this.setState({
+      todos
+    });
   }
   editTodo(index) {
     const todo = this.state.todos[index];
@@ -180,9 +185,7 @@ class App extends Component {
                           todos={todos}
                           editTodo={() => this.editTodo(index)}
                           deleteTodo={() => this.deleteTodo(index)}
-                          completeTodo={() =>
-                            this.completeTodo(index, isCompleted)
-                          }
+                          completeTodo={this.completeTodo}
                         />
                       );
                     })}
