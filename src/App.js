@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Header from "./Components/Header";
-import { FormControl, Button } from "react-bootstrap";
+import { FormControl, Button, Grid, Row, Col } from "react-bootstrap";
 import ListItem from "./Components/ListItem";
 import "./App.css";
+
 import axios from "axios";
 import loader from "./loader.gif";
 
@@ -127,9 +128,13 @@ class App extends Component {
     } = this.state;
     const { isCompleted } = this.state.todos;
     return (
-      <div className="container">
+      <div className="container-fluid">
         <div className="App">
           <Header />
+          <div className=' '>
+          <Grid>
+          <Row className="show-grid">
+          <Col className='task-container'     mdOffset={2} lgOffset={3} smOffset={3} sm={6} md={6}>
           <div className="form-input">
             <FormControl
               type="text"
@@ -145,7 +150,7 @@ class App extends Component {
               </div>
             )}
             {loading && <img src={loader} alt="" />}
-            <Button
+            <button
               bsSize="large"
               bsStyle="success"
               className="add-btn"
@@ -153,7 +158,7 @@ class App extends Component {
               disabled={this.state.newTodo.length < 3}
             >
               {editing ? "Update todo" : "Add todo"}
-            </Button>
+            </button>
           </div>
           <br />
           {(!editing || loading) &&
@@ -169,9 +174,13 @@ class App extends Component {
                   editTodo={() => this.editTodo(index)}
                   deleteTodo={() => this.deleteTodo(index)}
                   completeTodo={() => this.completeTodo(index, isCompleted)}
-                />
+                />      
               );
             })}
+            </Col>
+            </ Row>
+            </Grid>
+            </div>
         </div>
       </div>
     );
