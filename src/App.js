@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Header from "./Components/Header";
-import { FormControl, Button } from "react-bootstrap";
+import { FormControl, Button, Grid, Row, Col } from "react-bootstrap";
 import ListItem from "./Components/ListItem";
 import "./App.css";
+
 import axios from "axios";
 import loader from "./loader.gif";
 
@@ -73,18 +74,15 @@ class App extends Component {
     });
     this.alert("Todo deleted successfully");
   }
-  async completeTodo(index, isCompleted) {
-    const todo = this.state.todos[index];
-    const todoCompteled = !this.state.todos[isCompleted];
-
-    const response = await axios.put(`${this.apiUrl}/${todo.id}`, {
-      isCompleted: todoCompteled
-    });
-    const todos = this.state.todos;
-    console.log(response);
-    todo.isCompleted = todo.isCompleted ? false : true;
-
-    this.setState({ todos, isCompletedIndex: index });
+   completeTodo(index, event) {
+    const todos = [...this.state.todos];
+    todos[index] = {
+      ...todos[index],
+      isCompleted: event.target.checked
+    };
+    this.setState({
+      todos
+    })
   }
   editTodo(index) {
     const todo = this.state.todos[index];
@@ -127,9 +125,13 @@ class App extends Component {
     } = this.state;
     const { isCompleted } = this.state.todos;
     return (
-      <div className="container">
+      <div className="container-fluid">
         <div className="App">
           <Header />
+          <div className=' '>
+          <Grid>
+          <Row className="show-grid">
+          <Col className='task-container'     mdOffset={2} lgOffset={3} smOffset={3} sm={6} md={6}>
           <div className="form-input">
             <FormControl
               type="text"
@@ -145,7 +147,7 @@ class App extends Component {
               </div>
             )}
             {loading && <img src={loader} alt="" />}
-            <Button
+            <button
               bsSize="large"
               bsStyle="success"
               className="add-btn"
@@ -153,7 +155,7 @@ class App extends Component {
               disabled={this.state.newTodo.length < 3}
             >
               {editing ? "Update todo" : "Add todo"}
-            </Button>
+            </button>
           </div>
           <br />
           {(!editing || loading) &&
@@ -168,10 +170,14 @@ class App extends Component {
                   todos={todos}
                   editTodo={() => this.editTodo(index)}
                   deleteTodo={() => this.deleteTodo(index)}
-                  completeTodo={() => this.completeTodo(index, isCompleted)}
-                />
+                  completeTodo={this.completeTodo}
+                />      
               );
             })}
+            </Col>
+            </ Row>
+            </Grid>
+            </div>
         </div>
       </div>
     );
