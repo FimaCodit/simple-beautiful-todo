@@ -2,29 +2,95 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.task-container{
+  background-color: #fff;
+  border-left: 1px solid  #DDDDDD;
+  border-right: 1px solid  #DDDDDD;
+  height: 100vh;
+}
+.my-container{
+  margin: 0;
 }
 
 .App-header {
-  height: 150px;
+  height: 50px;
   padding: 20px;
-  color: white;
+  background-color: #DB4C3F;
 }
 
 .App-title {
   font-size: 1.5em;
+}
+.add-btn{
+  float: left;
+  margin-top: -15px;
+  width: 135px;
+  height: 30px;
+  border: none;
+  background-color: #DB4C3F;
+  color: white;
+  font-weight: bold;  
 }
 .delete-btn {
   background-image: url(./delete.png);
   background-position: center top;
   background-size: cover;
   background-color: inherit;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   border: none;
-  margin-left: 20px;
+  margin-left: auto;
+  
+}
+.regular-radio {
+	-webkit-appearance: none;
+	background-color: #fafafa;
+	border: 1px solid #cacece;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+  padding: 9px;
+  margin-top: 2px;
+	border-radius: 50px;
+	display: inline-block;
+	position: relative;
+}
+input[type=checkbox]{
+  padding: 9px;
+}
+.regular-radio:checked:after {
+	content: ' ';
+	width: 12px;
+	height: 12px;
+	border-radius: 50px;
+	position: absolute;
+	top: 3px;
+	background: #DB4C3F;
+	box-shadow: inset 0px 0px 10px rgba(0,0,0,0.3);
+	text-shadow: 0px;
+	left: 3px;
+	font-size: 32px;
+}
+
+.regular-radio:checked {
+	background-color: #e9ecee;
+	color: #e62f0e;
+	border: 1px solid #c0aead;
+	box-shadow: 0 1px 2px rgba(230, 52, 52, 0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1), inset 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+.regular-radio:active, .regular-radio:checked:active {
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+
+.task-title{
+  margin-left: 10px;
+  font-weight: normal;
+  margin-top: -10px;
+  top: -4px;
+  position: relative;
+}
+.radio-btn{
+  background-color: #fff;
 }
 .edit-btn {
   background-image: url(./edit.png);
@@ -52,17 +118,20 @@
 .input-todo {
   background-color: inherit;
   border: none;
-  border-bottom: 3px solid white;
+  border: 1px solid #DDDDDD;
   margin-top: 20px;
   color: white;
   text-align: center;
   font-size: 20px;
 }
 .todo-item {
-  background-color: #353535;
-  border: #a3a3a3 1px solid;
-  color: white;
-  font-size: 20px;
+  border-bottom: 1px solid #DDDDDD;
+  font-size: 16px;
+  margin-top: 10px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  display: flex;
 }
 .input-todo::placeholder {
   color: white;
