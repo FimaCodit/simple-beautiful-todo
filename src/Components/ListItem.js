@@ -1,28 +1,28 @@
 import React from "react";
-import { Button, ListGroupItem } from "react-bootstrap";
+import { Button, ListGroupItem, Radio } from "react-bootstrap";
 import "../App.css";
 
 const ListItem = props => {
   return (
     <ListGroupItem className="todo-item" key={props.index}>
-      <span
+    <label><input id='rInput'
+     checked={props.item.isCompleted}   
+      type="checkbox" 
+      onChange={(event) => props.completeTodo(props.index, event)}
+        className='regular-radio'/><span className='task-title'
         style={{
           textDecoration: props.item.isCompleted ? "line-through" : "none"
         }}
       >
         {props.item.name}
-      </span>
-      <Button
-        className="ml-4 delete-btn"
-        bsStyle="danger"
-        onClick={props.deleteTodo}
-      />
-      <Button bsStyle="info" className="edit-btn" onClick={props.editTodo} />
-      <Button
-        bsStyle="info"
-        className="complete-btn"
-        onClick={props.completeTodo}
-      />
+      </span></label>
+      
+      <i class="fas fa-trash" className=" delete-btn" onClick={props.deleteTodo} /> 
+      <i class="fas fa-edit" className="edit-btn" onClick={props.editTodo} />
+
+
+ 
+      
     </ListGroupItem>
   );
 };
